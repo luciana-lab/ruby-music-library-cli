@@ -12,10 +12,10 @@ class MusicLibraryController
     def call
 
        #asks the user for input
-       input = gets.strip
+       input = ""
 
        #loops and asks for user input until they type in exit
-       if input != exit
+       while input != "exit"
 
        #welcomes the user
        puts "Welcome to your music library!"
@@ -28,6 +28,8 @@ class MusicLibraryController
        puts "To quit, type 'exit'."
        puts "What would you like to do?"
 
+       input = gets.strip
+       
        case input
 
         #triggers #list_songs

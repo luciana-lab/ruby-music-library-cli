@@ -16,9 +16,8 @@ class MusicImporter
         Dir.entries(path).select {|mp3| File.file? File.join(path, mp3)}
     end
 
-    #imports the files into the library by invoking Song.create_from_filenam
+    #imports the files into the library by invoking Song.create_from_filename
     def import
         files.each {|filename| Song.create_from_filename(filename)}
     end
-    
 end

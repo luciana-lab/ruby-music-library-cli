@@ -1,23 +1,18 @@
 class Genre
-
+    
     #extends the Concerns::Findable module
     extend Concerns::Findable
 
     #retrieves the name of a genre
     #can set the name of a genre
-    attr_accessor :name, :artist
-
+    attr_accessor :name, :song, :artist
+    
     #is initialized as an empty array
     @@all = []
 
     #accepts a name for the new genre
     def initialize(name)
         @name = name
-    end
-
-    #adds the Genre instance to the @@all class variable
-    def save
-        @@all << self
     end
 
     #returns the class variable @@all
@@ -30,18 +25,21 @@ class Genre
         @@all.clear
     end
 
+    #adds the Genre instance to the @@all class variable
+    def save
+        @@all << self
+    end
+
     #initializes and saves the genre
     def self.create(genre)
-        self.new(genre).tap do
-            |genre| genre.save
-        end
+        new_genre = self.new(genre)
+        new_genre.save
+        new_genre
     end
 
     #returns the genre's 'songs' collection (genre has many songs
     def songs
-        Song.all.select do |song|
-            song.genre == self
-        end
+        Song.all.select {|song| song.genre == self}
     end
 
     #returns a collection of artists for all of the genre's songs (genre has many artists through songs)
@@ -49,4 +47,5 @@ class Genre
     def artists
         songs.collect {|song| song.artist}.uniq
     end
+
 end

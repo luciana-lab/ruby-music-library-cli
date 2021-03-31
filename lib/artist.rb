@@ -5,8 +5,8 @@ class Artist
 
     #retrieves the name of an artist
     #can set the name of an artist
-    attr_accessor :name, :song
-
+    attr_accessor :name, :song, :genre
+    
     #is initialized as an empty array
     @@all = []
 
@@ -14,11 +14,6 @@ class Artist
     def initialize(name)
         @name = name
         @songs = []
-    end
-
-    #adds the Artist instance to the @@all class variable
-    def save
-        @@all << self
     end
 
     #returns the class variable @@all
@@ -31,11 +26,16 @@ class Artist
         @@all.clear
     end
 
+    #adds the Artist instance to the @@all class variable
+    def save
+        @@all << self
+    end
+
     #initializes and saves the artist
     def self.create(artist)
-        self.new(artist).tap do
-            |artist| artist.save
-        end
+        new_artist = self.new(artist)
+        new_artist.save
+        new_artist
     end
 
     #returns the artist's 'songs' collection
@@ -48,18 +48,11 @@ class Artist
     #adds the song to the current artist's 'songs' collection
     #does not add the song to the current artist's collection of songs if it already exists therein
     def add_song(song)
-        if song.artist == nil 
-           song.artist = self
+        if song.artist == nil
+            song.artist = self
         else
             nil
         end
-
-        if @songs.include?(song)
-            nil
-        else
-            @songs << song
-        end
-        song
     end
 
     #returns a collection of genres for all of the artist's songs (artist has many genres through songs)
